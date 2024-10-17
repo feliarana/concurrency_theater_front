@@ -54,7 +54,7 @@ const Seats = () => {
   );
 
   const hasReservedTickets = availableSeats.some(
-    (seat) => seat.status === "reserved"
+    (seat) => seat.status === "reserved" && seat.user_id === currentUser.id
   );
 
   const getStatusColor = (status) => {
