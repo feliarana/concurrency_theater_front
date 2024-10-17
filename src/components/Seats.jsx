@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-
+import usePerformancesStore from "../store/performancesStore";
 import {
   fetchPerformancesSeats,
   reserveSeat,
@@ -16,6 +16,12 @@ const Seats = () => {
   const [loading, setLoading] = useState(true);
   const currentUser = useAuthStore((state) => state.user);
   const navigate = useNavigate();
+  const { performances } = usePerformancesStore();
+
+  // Get the current performance
+  const currentPerformance = performances.find(
+    (p) => p.id === parseInt(performanceId, 10)
+  );
 
   useEffect(() => {
     const getTickets = async () => {
@@ -100,7 +106,12 @@ const Seats = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Asientos Disponibles</h1>
+      <h1 className="text-2xl font-bold mb-4">
+        Asientos Disponibles para{" "}
+        <span className="text-blue-600">
+          {currentPerformance ? currentPerformance.title : "..."}
+        </span>
+      </h1>
       <div className="flex flex-col md:flex-row justify-between gap-8 md:gap-1">
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {availableSeats.map((seat) => {
