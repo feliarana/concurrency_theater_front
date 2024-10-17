@@ -9,6 +9,7 @@ import {
 } from "../api/tickets";
 import useAuthStore from "../store/authStore";
 import useWebSocket from "../hooks/useWebSocket";
+import { translateStatus } from "../utils/statusTranslations";
 
 const Seats = () => {
   const { performanceId } = useParams();
@@ -17,30 +18,25 @@ const Seats = () => {
   const [performance, setPerformance] = useState(null);
   const currentUser = useAuthStore((state) => state.user);
   const navigate = useNavigate();
-  const { performances, fetchPerformances } = usePerformancesStore();
 
   const currentPerformance = performances.find(
     (p) => p.id === parseInt(performanceId, 10)
   );
 
-  const translateStatus = (status) => {
-    const statusTranslations = {
-      available: "disponible",
-      reserved: "reservado",
-      cancelled: "cancelado",
-      purchased: "comprado"
-    };
-    return statusTranslations[status] || status;
-  };
+  // Extraer tanto el estado como las acciones del store
+  const { performances, getPerformances } = usePerformancesStore((state) => ({
+    performances: state.performances,
+    getPerformances: state.getPerformances  // Asegúrate que este es el nombre correcto de la acción en tu store
+  }));
 
   useEffect(() => {
     const loadData = async () => {
       try {
         // Cargar performances si no están disponibles
         if (performances.length === 0) {
-          await fetchPerformances();
+          await getPerformances();  // Usar getPerformances en lugar de fetchPerformances
         }
-        
+
         const data = await fetchPerformancesSeats();
         setSeats(data);
       } catch (error) {
@@ -52,7 +48,7 @@ const Seats = () => {
     };
 
     loadData();
-  }, [performances.length, fetchPerformances]);
+  }, [performances.length, getPerformances]);
 
   useEffect(() => {
     const current = performances.find((p) => p.id === parseInt(performanceId, 10));
@@ -141,9 +137,8 @@ const Seats = () => {
             return (
               <li
                 key={seat.id}
-                className={`${
-                  isUnavailable ? "bg-gray-300" : getStatusColor(seat.status)
-                } shadow-md rounded-lg p-4 hover:bg-gray-200 transition duration-300`}
+                className={`${isUnavailable ? "bg-gray-300" : getStatusColor(seat.status)
+                  } shadow-md rounded-lg p-4 hover:bg-gray-200 transition duration-300`}
               >
                 <div className="text-lg font-semibold">Asiento #{seat.id}</div>
                 <div className="text-gray-600">Precio: ${seat.price}</div>
@@ -174,9 +169,8 @@ const Seats = () => {
         <div className="h-auto">
           <button
             onClick={handlePurchase}
-            className={`bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300 ${
-              !hasReservedTickets ? "opacity-50 cursor-not-allowed" : ""
-            }`}
+            className={`bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300 ${!hasReservedTickets ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             disabled={!hasReservedTickets}
           >
             Comprar Tickets Reservados

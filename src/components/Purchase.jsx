@@ -155,7 +155,7 @@ const Purchase = () => {
                     Ticket ID: {ticket.id}
                   </h3>
                   <p className="text-gray-700">Precio: ${ticket.price}</p>
-                  <p className="text-gray-700">Estado: {ticket.status}</p>
+                  <p className="text-gray-700">Estado: {translateStatus(ticket.status)}</p>
                 </div>
               ))}
             </div>
