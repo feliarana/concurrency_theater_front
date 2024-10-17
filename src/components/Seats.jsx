@@ -14,9 +14,10 @@ const Seats = () => {
   const { performanceId } = useParams();
   const [seats, setSeats] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [performance, setPerformance] = useState(null);
   const currentUser = useAuthStore((state) => state.user);
   const navigate = useNavigate();
-  const { performances } = usePerformancesStore();
+  const { performances, fetchPerformances } = usePerformancesStore();
 
   const currentPerformance = performances.find(
     (p) => p.id === parseInt(performanceId, 10)
@@ -33,19 +34,30 @@ const Seats = () => {
   };
 
   useEffect(() => {
-    const getTickets = async () => {
+    const loadData = async () => {
       try {
+        // Cargar performances si no están disponibles
+        if (performances.length === 0) {
+          await fetchPerformances();
+        }
+        
         const data = await fetchPerformancesSeats();
         setSeats(data);
       } catch (error) {
-        console.error("Error fetching performances:", error);
+        console.error("Error fetching data:", error);
+        toast.error("Error al cargar los datos");
       } finally {
         setLoading(false);
       }
     };
 
-    getTickets();
-  }, []);
+    loadData();
+  }, [performances.length, fetchPerformances]);
+
+  useEffect(() => {
+    const current = performances.find((p) => p.id === parseInt(performanceId, 10));
+    setPerformance(current);
+  }, [performances, performanceId]);
 
   useWebSocket(performanceId, setSeats);
 
@@ -118,7 +130,7 @@ const Seats = () => {
       <h1 className="text-2xl font-bold mb-4">
         Asientos Disponibles para{" "}
         <span className="text-blue-600">
-          {currentPerformance ? currentPerformance.title : "..."}
+          {performance ? performance.title : "..."}
         </span>
       </h1>
       <div className="flex flex-col md:flex-row justify-between gap-8 md:gap-1">
