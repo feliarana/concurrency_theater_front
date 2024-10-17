@@ -8,28 +8,7 @@ import api from "../api/api";
 import useAuthStore from "../store/authStore";
 import usePerformancesStore from "../store/performancesStore";
 
-export const fetchTicketsByUser = async () => {
-  const token = localStorage.getItem("token");
-
-  if (!token) {
-    throw new Error("No token found");
-  }
-
-  try {
-    const response = await api.get(
-      "/tickets/user_tickets",
-      {
-        headers: {
-          Authorization: `${token}`,
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching tickets:", error);
-    throw error;
-  }
-};
+import { fetchTicketsByUser } from "../api/tickets";
 
 const Purchase = () => {
   const [tickets, setTickets] = useState([]);

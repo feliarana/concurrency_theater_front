@@ -47,4 +47,29 @@ export const cancelReservation = async (seatId) => {
     console.error("Error canceling reservation:", error);
     throw error;
   }
+
+};
+
+export const fetchTicketsByUser = async (userId) => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    window.location.href = "/login";
+    return;
+  }
+
+  try {
+    const response = await api.get(
+      "/tickets/user_tickets",
+      {
+        headers: {
+          Authorization: `${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching tickets:", error);
+    throw error;
+  }
 };

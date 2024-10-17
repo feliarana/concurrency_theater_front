@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import Header from "./components/Header";
 import Performances from "./components/Performances";
 import Seats from "./components/Seats";
+import MyTickets from "./components/MyTickets";
 import PrivateRoute from "./components/PrivateRoute";
 import "./styles.css";
 import Home from "./components/Home";
@@ -38,6 +39,7 @@ function App() {
               path="/purchase"
               element={<PrivateRoute component={Purchase} />}
             />
+            <Route path="/my-tickets" element={<PrivateRoute component={MyTickets} />} />
             <Route path="/reset" element={<Reset />} />
             <Route path="*" element={<div>NOT FOUND</div>} />
           </Routes>
