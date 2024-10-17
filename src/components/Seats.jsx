@@ -80,7 +80,7 @@ const Seats = () => {
           seat.id === reservedSeat.id ? reservedSeat : seat
         )
       );
-      toast.success("Asiento reservado exitosamente!");
+      toast.success("Ticket reservado exitosamente!");
     } catch (error) {
       console.error("Error reserving seat:", error);
     }
@@ -127,7 +127,7 @@ const Seats = () => {
                 <div className="text-lg font-semibold">Asiento #{seat.id}</div>
                 <div className="text-gray-600">Precio: ${seat.price}</div>
                 <div className="text-gray-600">
-                  Estado: {isUnavailable ? "not available" : seat.status}
+                  Estado: {isUnavailable ? "No disponible" : seat.status}
                 </div>
                 {seat.status === "available" && (
                   <button

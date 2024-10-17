@@ -77,7 +77,7 @@ const Purchase = () => {
     if (timeLeft === null) return;
 
     if (timeLeft <= 0) {
-      toast.error("Tiempo de reserva expirado. Vuelva a seleccionar asientos.");
+      toast.error("Tiempo de reserva expirado. Vuelva a seleccionar ticket.");
       navigate("/");
     }
 
