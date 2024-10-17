@@ -7,19 +7,18 @@ export default defineConfig({
     react(),
     VitePWA({
       manifest: {
-        name: "ConcuTickets",
-        short_name: "ConcuTickets",
+        name: "Concu Tickets",
+        short_name: "Concu Tickets",
         start_url: "/",
         display: "standalone",
         background_color: "#ffffff",
         theme_color: "#ffffff",
         icons: [
           {
-            src: "icon.png",
-            sizes: "192x192",
-            type: "image/png",
+            src: "favicon.ico",
+            sizes: "225x225",
+            type: "image/x-icon",
           },
-          // ... otras resoluciones de icono
         ],
       },
       registerType: "autoUpdate",
