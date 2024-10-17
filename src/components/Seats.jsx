@@ -24,19 +24,16 @@ const Seats = () => {
   );
 
   // Extraer tanto el estado como las acciones del store
-  const { performances, getPerformances } = usePerformancesStore((state) => ({
-    performances: state.performances,
-    getPerformances: state.getPerformances  // Asegúrate que este es el nombre correcto de la acción en tu store
-  }));
+  const {
+    performances,
+    loading: performancesLoading,
+    fetchAndSetPerformances
+  } = usePerformancesStore();
 
   useEffect(() => {
     const loadData = async () => {
       try {
-        // Cargar performances si no están disponibles
-        if (performances.length === 0) {
-          await getPerformances();  // Usar getPerformances en lugar de fetchPerformances
-        }
-
+        await fetchAndSetPerformances();
         const data = await fetchPerformancesSeats();
         setSeats(data);
       } catch (error) {
@@ -48,16 +45,18 @@ const Seats = () => {
     };
 
     loadData();
-  }, [performances.length, getPerformances]);
+  }, [fetchAndSetPerformances]);
 
   useEffect(() => {
-    const current = performances.find((p) => p.id === parseInt(performanceId, 10));
+    const current = performances.find(
+      (p) => p.id === parseInt(performanceId, 10)
+    );
     setPerformance(current);
   }, [performances, performanceId]);
 
   useWebSocket(performanceId, setSeats);
 
-  if (loading) {
+  if (loading || performancesLoading) {
     return <div>Cargando...</div>;
   }
 
