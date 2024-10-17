@@ -18,10 +18,19 @@ const Seats = () => {
   const navigate = useNavigate();
   const { performances } = usePerformancesStore();
 
-  // Get the current performance
   const currentPerformance = performances.find(
     (p) => p.id === parseInt(performanceId, 10)
   );
+
+  const translateStatus = (status) => {
+    const statusTranslations = {
+      available: "disponible",
+      reserved: "reservado",
+      cancelled: "cancelado",
+      purchased: "comprado"
+    };
+    return statusTranslations[status] || status;
+  };
 
   useEffect(() => {
     const getTickets = async () => {
@@ -127,7 +136,7 @@ const Seats = () => {
                 <div className="text-lg font-semibold">Asiento #{seat.id}</div>
                 <div className="text-gray-600">Precio: ${seat.price}</div>
                 <div className="text-gray-600">
-                  Estado: {isUnavailable ? "No disponible" : seat.status}
+                  Estado: {isUnavailable ? "no disponible" : translateStatus(seat.status)}
                 </div>
                 {seat.status === "available" && (
                   <button

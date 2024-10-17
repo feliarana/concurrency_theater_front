@@ -22,7 +22,7 @@ const Header = () => {
             to="/performances"
             className="mb-2 md:mb-0 md:mr-4 hover:underline"
           >
-            Performances
+            Obras disponibles
           </Link>
         </div>
         {loggedIn ? (
