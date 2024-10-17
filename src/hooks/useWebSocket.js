@@ -3,7 +3,7 @@ import { useEffect } from "react";
 const useWebSocket = (performanceId, setSeats) => {
   useEffect(() => {
     // Access the WebSocket URL from the environment variable
-    const wsUrl = process.env.NEXT_PUBLIC_WEBSOCKET_URL;
+    const wsUrl = import.meta.env.VITE_WEBSOCKET_URL || "ws://localhost:3000";
 
     if (!wsUrl) {
       console.error("WebSocket URL not defined in environment variables.");

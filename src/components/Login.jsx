@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../store/authStore";
 import { toast } from "sonner";
@@ -11,28 +11,30 @@ const Login = () => {
 
   const login = useAuthStore((state) => state.login);
 
+  // Add this useEffect to check environment variables on component mount
+  useEffect(() => {
+    console.log("Environment Variables Debug:");
+    console.log("VITE_API_BASE_URL:", import.meta.env.VITE_API_BASE_URL);
+  }, []);
+
+  // Define API base URL with fallback
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user = { email, password };
 
-    const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/login`;
-    console.log("API URL to show:"); // Add this line for debugging
-    console.log("API URL:", apiUrl); // Add this line for debugging
-    console.log("API URL:", apiUrl); // Add this line for debugging
+    const apiUrl = `${API_BASE_URL}/login`;
+    console.log("Final API URL being used:", apiUrl);
 
     try {
-      console.log("API URL to show2:"); // Add this line for debugging
-      console.log("API URL:", apiUrl); // Add this line for debugging
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/login`, // Use environment variable for the base URL
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ user }),
-        }
-      );
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ user }),
+      });
 
       if (!response.ok) {
         throw new Error("Login failed");
@@ -49,6 +51,7 @@ const Login = () => {
       navigate("/performances");
       toast.success("Inicio de sesión exitoso!");
     } catch (err) {
+      console.error("Login error:", err);
       setError(err.message);
     }
   };
