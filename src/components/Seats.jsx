@@ -60,7 +60,7 @@ const Seats = () => {
   const availableSeats = filterSeatsByPerformanceId(
     seats,
     parseInt(performanceId, 10)
-  );
+  ).sort((a, b) => a.id - b.id);
 
   const hasReservedTickets = availableSeats.some(
     (seat) => seat.status === "reserved" && seat.user_id === currentUser.id
