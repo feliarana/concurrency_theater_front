@@ -7,7 +7,9 @@ const Home = () => {
         Bienvenido al sistema de venta de tickets para la demo de Programación Concurrente.
       </h1>
       <p className="text-lg mb-8">
-        Desarrollado por Felipe Arana. Se React + Vite y Websockets.
+        Desarrollado por Felipe Arana. 
+        <br/>Frameworks utilizados: React + Vite con PWA y Websockets.
+        <br/>Backend: Ruby On Rails.
       </p>
     </main>
   );
