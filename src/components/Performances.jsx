@@ -18,7 +18,7 @@ const Performances = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Listado de Performances</h1>
+      <h1 className="text-2xl font-bold mb-4">Listado de Obras</h1>
       <ul className="space-y-4">
         {performances.map((performance) => (
           <li

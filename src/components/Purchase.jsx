@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { translateStatus } from "../utils/statusTranslations";
+import { Link } from "react-router-dom";
 
 import api from "../api/api";
 import useAuthStore from "../store/authStore";
@@ -101,7 +102,17 @@ const Purchase = () => {
   const [paymentMethod, setPaymentMethod] = useState("creditCard");
 
   if (loading || performances.length === 0 || tickets.length === 0) {
-    return <div>Cargando...</div>;
+    return (
+      <div>
+        No posee tickets a pagar.{" "} <br/>
+        <Link
+          to="/performances"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Volver a las obras
+        </Link>
+      </div>
+    );
   }
 
   const total = tickets.reduce((acc, ticket) => acc + ticket.price, 0);
@@ -138,7 +149,7 @@ const Purchase = () => {
   return (
     <>
       <div className="p-4">
-        <h1 className="text-2xl font-bold mb-4">{performanceSelected.title}</h1>
+        {/* <h1 className="text-2xl font-bold mb-4">{performanceSelected.title}</h1> */}
         <div className="flex flex-row-reverse">
           {timeLeft !== null && (
             <div className="bg-red-500 text-white font-bold py-2 px-4 rounded mb-4 inline-block w-auto">
@@ -154,8 +165,14 @@ const Purchase = () => {
                   key={ticket.id}
                   className="bg-white shadow-md rounded-lg p-4"
                 >
+                  <h1 className="text-lg font-bold mb-2">
+                    {ticket.performance.title}
+                  </h1>
                   <h3 className="text-lg font-bold mb-2">
                     Ticket ID: {ticket.id}
+                  </h3>
+                  <h3 className="text-lg font-bold mb-2">
+                    Reserva para: {ticket.user.name}
                   </h3>
                   <p className="text-gray-700">Precio: ${ticket.price}</p>
                   <p className="text-gray-700">Estado: {translateStatus(ticket.status)}</p>

@@ -12,6 +12,7 @@ import Login from "./components/Login";
 import useAuthStore from "./store/authStore";
 import Purchase from "./components/Purchase";
 import Footer from "./components/Footer";
+import Reset from "./components/Reset";
 
 function App() {
   const initialize = useAuthStore((state) => state.initialize);
@@ -37,6 +38,7 @@ function App() {
               path="/purchase"
               element={<PrivateRoute component={Purchase} />}
             />
+            <Route path="/reset" element={<Reset />} />
             <Route path="*" element={<div>NOT FOUND</div>} />
           </Routes>
         </div>
