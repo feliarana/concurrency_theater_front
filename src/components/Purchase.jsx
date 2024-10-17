@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { translateStatus } from "../utils/statusTranslations";
 
 import api from "../api/api";
 import useAuthStore from "../store/authStore";
@@ -47,28 +48,30 @@ const Purchase = () => {
 
   useEffect(() => {
     const fetchTickets = async () => {
-      try {
-        const data = await fetchTicketsByUser(user.id);
-        const ticketsData = data.filter(
-          (ticket) => ticket.status === "reserved"
-        );
-        setTickets(ticketsData);
-        if (ticketsData.length > 0) {
-          if (!ticketsData[0]?.reserved_until) {
-            navigate("/performances");
-            return;
+      if (user) {
+        try {
+          const data = await fetchTicketsByUser(user.id);
+          const ticketsData = data.filter(
+            (ticket) => ticket.status === "reserved"
+          );
+          setTickets(ticketsData);
+          if (ticketsData.length > 0) {
+            if (!ticketsData[0]?.reserved_until) {
+              navigate("/performances");
+              return;
+            }
+            let closestReservedUntil = new Date(ticketsData[0].reserved_until);
+
+            const now = new Date();
+            const timeDiff = Math.abs(closestReservedUntil - now);
+
+            setTimeLeft(timeDiff);
           }
-          let closestReservedUntil = new Date(ticketsData[0].reserved_until);
-
-          const now = new Date();
-          const timeDiff = Math.abs(closestReservedUntil - now);
-
-          setTimeLeft(timeDiff);
+        } catch (error) {
+          console.error("Error fetching tickets:", error);
         }
-      } catch (error) {
-        console.error("Error fetching tickets:", error);
-      }
-    };
+      };
+    }
 
     fetchTickets();
   }, [user]);

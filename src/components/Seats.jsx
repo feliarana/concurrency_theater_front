@@ -19,16 +19,9 @@ const Seats = () => {
   const currentUser = useAuthStore((state) => state.user);
   const navigate = useNavigate();
 
-  const currentPerformance = performances.find(
-    (p) => p.id === parseInt(performanceId, 10)
-  );
-
   // Extraer tanto el estado como las acciones del store
-  const {
-    performances,
-    loading: performancesLoading,
-    fetchAndSetPerformances
-  } = usePerformancesStore();
+  const { performances, loading: performancesLoading, fetchAndSetPerformances } =
+    usePerformancesStore();
 
   useEffect(() => {
     const loadData = async () => {
