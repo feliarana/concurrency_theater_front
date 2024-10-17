@@ -118,7 +118,7 @@ const Purchase = () => {
       toast.success(
         `Pago realizado con éxito usando ${paymentMethod}. ¡Gracias por tu compra!`
       );
-      navigate("/");
+      navigate("/my-tickets");
     } catch (error) {
       toast.error("Hubo un error al procesar el pago. Inténtalo de nuevo.");
       alert("Hubo un error al procesar el pago. Inténtalo de nuevo.");
