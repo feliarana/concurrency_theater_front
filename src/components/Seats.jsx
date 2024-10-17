@@ -158,11 +158,10 @@ const Seats = () => {
             );
           })}
         </ul>
-        <div className="h-auto">
+        <div className="fixed bottom-4 right-4 z-10">
           <button
             onClick={handlePurchase}
-            className={`bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300 ${!hasReservedTickets ? "opacity-50 cursor-not-allowed" : ""
-              }`}
+            className={`bg-blue-500 text-white py-2 px-4 rounded shadow-lg hover:bg-blue-700 transition duration-300 ${!hasReservedTickets ? "opacity-50 cursor-not-allowed" : ""}`}
             disabled={!hasReservedTickets}
           >
             Comprar Tickets Reservados
