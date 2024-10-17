@@ -30,18 +30,22 @@ const Header = () => {
             >
               Inicio
             </Link>
-            <Link
-              to="/performances"
-              className="block md:inline-block hover:underline mb-2 md:mb-0"
-            >
-              Obras disponibles
-            </Link>
-            <Link
-              to="/my-tickets"
-              className="block md:inline-block hover:underline mb-2 md:mb-0"
-            >
-              Mis Tickets Comprados
-            </Link>
+            {loggedIn && (
+              <>
+                <Link
+                  to="/performances"
+                  className="block md:inline-block hover:underline mb-2 md:mb-0"
+                >
+                  Obras disponibles
+                </Link>
+                <Link
+                  to="/my-tickets"
+                  className="block md:inline-block hover:underline mb-2 md:mb-0"
+                >
+                  Mis Tickets Comprados
+                </Link>
+              </>
+            )}
             {loggedIn ? (
               <div className="flex flex-col md:flex-row md:items-center">
                 <span className="mr-4">
