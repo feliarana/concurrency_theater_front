@@ -16,10 +16,13 @@ const Login = () => {
     const user = { email, password };
 
     const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/login`;
+    console.log("API URL to show:"); // Add this line for debugging
     console.log("API URL:", apiUrl); // Add this line for debugging
     console.log("API URL:", apiUrl); // Add this line for debugging
 
     try {
+      console.log("API URL to show2:"); // Add this line for debugging
+      console.log("API URL:", apiUrl); // Add this line for debugging
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/login`, // Use environment variable for the base URL
         {
