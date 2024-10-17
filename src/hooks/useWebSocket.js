@@ -2,7 +2,15 @@ import { useEffect } from "react";
 
 const useWebSocket = (performanceId, setSeats) => {
   useEffect(() => {
-    const ws = new WebSocket("ws://localhost:3000/cable");
+    // Access the WebSocket URL from the environment variable
+    const wsUrl = process.env.NEXT_PUBLIC_WEBSOCKET_URL;
+
+    if (!wsUrl) {
+      console.error("WebSocket URL not defined in environment variables.");
+      return;
+    }
+
+    const ws = new WebSocket(`${wsUrl}`);
 
     ws.onopen = () => {
       ws.send(
