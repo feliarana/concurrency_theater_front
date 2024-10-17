@@ -26,4 +26,12 @@ export default defineConfig({
       handler: "auto",
     }),
   ],
+  build: {
+    rollupOptions: {
+      input: {
+        main: '/index.html',
+        favicon: '/public/favicon.ico'
+      }
+    }
+  }
 });
