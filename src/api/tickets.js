@@ -5,7 +5,7 @@ export const fetchPerformancesSeats = async () => {
   if (!token) throw new Error("No token found");
 
   try {
-    const response = await api.get("http://localhost:3000/tickets", {
+    const response = await api.get("/tickets", {
       headers: { Authorization: `${token}` },
     });
     return response.data;
@@ -21,7 +21,7 @@ export const reserveSeat = async (seatId) => {
 
   try {
     const response = await api.post(
-      `http://localhost:3000/tickets/${seatId}/reserve`,
+      `/tickets/${seatId}/reserve`,
       {},
       { headers: { Authorization: `${token}` } }
     );
@@ -38,7 +38,7 @@ export const cancelReservation = async (seatId) => {
 
   try {
     const response = await api.post(
-      `http://localhost:3000/tickets/${seatId}/cancel`,
+      `/tickets/${seatId}/cancel`,
       {},
       { headers: { Authorization: `${token}` } }
     );

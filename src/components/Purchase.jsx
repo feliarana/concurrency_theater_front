@@ -15,7 +15,7 @@ export const fetchTicketsByUser = async () => {
 
   try {
     const response = await api.get(
-      "http://localhost:3000/tickets/user_tickets",
+      "/tickets/user_tickets",
       {
         headers: {
           Authorization: `${token}`,
@@ -113,7 +113,7 @@ const Purchase = () => {
 
       for (const ticket of tickets) {
         await api.post(
-          `http://localhost:3000/tickets/${ticket.id}/purchase`,
+          `/tickets/${ticket.id}/purchase`,
           {},
           {
             headers: {

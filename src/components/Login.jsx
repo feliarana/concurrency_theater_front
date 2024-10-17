@@ -16,13 +16,16 @@ const Login = () => {
     const user = { email, password };
 
     try {
-      const response = await fetch("http://localhost:3000/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ user }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/login`, // Use environment variable for the base URL
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ user }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Login failed");

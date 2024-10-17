@@ -9,7 +9,7 @@ export const fetchPerformances = async () => {
   }
 
   try {
-    const response = await api.get("http://localhost:3000/performances", {
+    const response = await api.get("/performances", {
       headers: {
         Authorization: `${token}`,
       },

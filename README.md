@@ -9,7 +9,7 @@ Before you start, ensure you have the following installed:
 * **Node.js v20.17**
 * **Yarn 4.0** (You can install Yarn by running `npm install -g yarn`)
 
-### Setup Instructions
+### Development Setup Instructions
 
 1. **Clone the repository** (or use this template for your project).
 2. Install the necessary dependencies:
@@ -17,11 +17,14 @@ Before you start, ensure you have the following installed:
    ```bash
    yarn install
    ```
+
    </code></div></div></pre>
 3. Start the development server:
+
    ```bash
    yarn dev
    ```
+
    </code></div></div></pre>
 4. Access the development environment at `http://localhost:3000`.
 
